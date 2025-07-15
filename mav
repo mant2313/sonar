@@ -72,3 +72,77 @@ Step 6: Run the JAR File
 java -cp target/demo-project-1.0-SNAPSHOT.jar com.example.App
 
 Note : The above steps is to run a Java Application using Maven.
+
+
+PART 2: Migrate the Same Application to GRADLE
+
+Step 1: Delete Maven-Specific Files
+In the demo-project/ folder:
+ Delete pom.xml
+
+Do NOT delete the src/ folder — we reuse the code.
+
+Step 2: Installation of Gradle
+Download Gradle(version 8.x.x and above)
+ Go to the official site: https://gradle.org/releases/
+ Download the binary-only ZIP (not the complete source code).
+
+-> click on Binary - only link , the binary zip file will be downloaded.
+
+1. Extract the zip file to C:\Gradle\gradle-8.x.x folder location. (8.x.x - > specify the
+downloaded version )
+2. Set environment variables using setx (as explained below)
+3. Open Command Prompt (Run as Administrator) and execute the following :
+> setx GRADLE_HOME "C:\Gradle\gradle-8.x.x" /M
+[Note: 8.x.x - > specify the downloaded version]
+> setx PATH "%PATH%;%GRADLE_HOME%\bin" /M
+
+4. Restart your Command Prompt and check:
+
+-> Check whether is Gradle is properly installed
+5. Open Command Prompt and execute the following :
+> gradle -v
+
+Step 3: Create Gradle Files
+Create two new files in the demo- project folder
+File 1: build.gradle
+plugins {
+id 'java'
+}
+group = 'com.example'
+version = '1.0-SNAPSHOT'
+repositories {
+mavenCentral()
+}
+dependencies {
+testImplementation 'junit:junit:4.13.2'
+}
+
+Note : incase of Version discrepancies add the below code to build.grade file
+
+java {
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+}
+
+File 2: settings.gradle
+rootProject.name = 'demo-project
+
+The Project Structure looks as below
+demo-project/
+├── build.gradle
+├── settings.gradle
+└── src/
+├── main/java/com/example/App.java
+└── test/java/com/example/AppTest.java
+
+Step 4: Build with Gradle
+1. In the demo-project/ folder, run:
+> gradle build
+
+> gradle test
+
+2. Run the Gradle
+> java -cp build/libs/demo-project-1.0-SNAPSHOT.jar com.example.App
+
+Note : The above steps is to run a Java Application using Gradle.
